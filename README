@@ -1,0 +1,4 @@
+
+
+Put board in PYTHONPATH
+and python -m board.board

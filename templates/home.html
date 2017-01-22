@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+{% for category, plugin_group in plugins.items() %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ category }}</h3>
+    </div>
+    <div class="panel-body">
+        <ul>
+            {% for plugin in plugin_group %}
+            <li>
+                <a class="dropdown-item" href="/plugin/{{plugin}}">{{plugin}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+

@@ -1,0 +1,15 @@
+<table>
+    <thead>
+        {% for col in columns %}
+        <th>{{ col }}</th>
+        {% endfor %}
+    </thead>
+    {% for line in values %}
+    <tr>
+        {% for item in line %}
+        <td>{{item}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+

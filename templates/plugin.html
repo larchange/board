@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{plugin.title}}</h1>
+
+<ol class="breadcrumb">
+    <li><a class="breadcrumb-item" href="/">Home</a></li>
+    <li class="active">{{ plugin.title }}</li>
+</ol>
+
+{{ plugin_content }}
+{% endblock %}
+
+{% block additional_js %}
+{{ plugin_js }}
+{% endblock %}
+
+
+

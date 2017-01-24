@@ -1,4 +1,5 @@
 
 
 Put board in PYTHONPATH
-and python -m board.board
+and run python start_board.py
+a demo board is available

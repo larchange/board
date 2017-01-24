@@ -1,7 +1,7 @@
-from ..widgets import containers
-from ..widgets import titles
-from ..widgets import tables
-from ..core.plugin import Plugin
+from board.widgets import containers
+from board.widgets import titles
+from board.widgets import tables
+from board.core.plugin import Plugin
 
 import pandas
 import statsmodels.api as sm

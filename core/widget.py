@@ -4,15 +4,15 @@ from jinja2 import Environment, FileSystemLoader
 import functools
 
 
+SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+
+
 class Response(object):
     def __init__(self):
         self.html = ""
         self.js = ""
         self.styles = set()
         self.scripts = set()
-
-
-SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
 class Widget:

@@ -9,12 +9,12 @@ class Container(Widget, MutableSequence):
         self._content = []
         self.orient = orient
 
-    def render(self):
-        response = super().render()
+    async def render(self):
+        response = await super().render()
         html = []
         js = []
         for widget in self._content:
-            res = widget.render()
+            res = await widget.render()
             html.append(res.html)
             js.append(res.js)
             response.scripts |= res.scripts

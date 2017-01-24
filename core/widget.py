@@ -25,7 +25,7 @@ class Widget:
         super().__init__()
         self.uuid = "id_{}".format(uuid.uuid1())
 
-    def render(self):
+    async def render(self):
         response = Response()
         response.scripts |= set(self.scripts)
         response.styles |= set(self.styles)
@@ -54,22 +54,22 @@ class Jinja2Widget(Widget):
         super().__init__(*args, **kw)
         self.data_cache = None
 
-    def render(self):
-        response = super().render()
-        data = self.data()
-        response.html += self.render_html(data)
-        response.js += self.render_js(data)
+    async def render(self):
+        response = await super().render()
+        data = await self.data()
+        response.html += await self.render_html(data)
+        response.js += await self.render_js(data)
         return response
 
-    def render_html(self, data):
+    async def render_html(self, data):
         return self.template.render(**data)
 
-    def render_js(self, data):
+    async def render_js(self, data):
         if self.template_js is not None:
             res = self.template_js.render(**data)
             return res
         else:
             return ""
 
-    def data(self):
+    async def data(self):
         return {}

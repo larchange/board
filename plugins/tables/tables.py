@@ -15,7 +15,7 @@ class DemoTable(Plugin):
         super().__init__()
         self.df = sm.datasets.get_rdataset("Duncan", "car")
 
-    def init_page(self, **kw):
+    async def init_page(self, **kw):
         container = containers.Container()
         container.append(tables.Table(self.df.data))
         return container

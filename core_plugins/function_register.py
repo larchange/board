@@ -28,6 +28,6 @@ class FunctionRegister(Plugin, Mapping):
     def __len__(self):
         return len(self._container)
 
-    def init_page(self, uuid, **kw):
-        return self._container[uuid](**kw)
+    async def init_page(self, uuid, **kw):
+        return await self._container[uuid](**kw)
 

@@ -9,7 +9,7 @@ class Plugin:
     def __init_subclass__(cls):
         Plugin.plugins[cls.__name__] = cls()
 
-    def init_page(self, **kw):
+    async def init_page(self, **kw):
         return "Base plugin"
 
     @property

@@ -10,7 +10,7 @@ class DemoTitles(Plugin):
     def __init__(self):
         super().__init__()
 
-    def init_page(self, **kw):
+    async def init_page(self, **kw):
         container = containers.Container()
         container.append(titles.Title('Level 1 Title', level=1))
         container.append(titles.Title('Level 2 Title', level=2))

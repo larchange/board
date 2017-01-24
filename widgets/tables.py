@@ -10,7 +10,7 @@ class Table(Jinja2Widget, template="tables"):
         super().__init__(*args, **kw)
         self.df = df
 
-    def data(self):
+    async def data(self):
         return {
             'uuid': self.uuid,
             'columns': self.df.columns,
@@ -29,14 +29,14 @@ class DataTable(Jinja2Widget, template="datatable"):
         self.df = df
         self.data_url = Plugin.plugins["FunctionRegister"].register(self.chunk)
 
-    def data(self):
+    async def data(self):
         return {
             'uuid': self.uuid,
             'columns': self.df.columns,
             'data_url': self.data_url
         }
 
-    def chunk(self, draw, start, length, **kw):
+    async def chunk(self, draw, start, length, **kw):
         start = int(start)
         length = int(length)
         column_order = int(kw.get('order[0][column]'))

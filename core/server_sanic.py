@@ -14,6 +14,8 @@ from sanic.response import html
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 
+app = Sanic(__name__)
+
 
 ENV = Environment(
     loader=FileSystemLoader(SCRIPT_DIR + '/../templates'),
@@ -26,7 +28,6 @@ for plug in plugins:
         PLUGIN_BY_CAT[plug.category].append(plug)
 PLUGIN_BY_CAT = dict(PLUGIN_BY_CAT)
 
-app = Sanic(__name__)
 
 
 @app.route("/")
@@ -42,14 +43,14 @@ async def handle_index(request):
 @app.route("/plugin/<plugin_name>")
 async def handle_plugin(request, plugin_name):
     plug = plugin.Plugin.plugins[plugin_name]
-    response = plug.init_page(
+    response = await plug.init_page(
         **{
             key: value[0]
             for key, value in request.args.items()
         }
     )
     if plug.template:
-        response = response.render()
+        response = await response.render()
         return html(ENV.get_template(plug.template).render(
             plugin=plug,
             plugin_content=response.html,

@@ -7,9 +7,9 @@ import pandas
 import statsmodels.api as sm
 
 
-class Demo(Plugin):
-    title = "Demo"
-    category = "Demo category"
+class DemoTable(Plugin):
+    title = "Table"
+    category = "Demo tables"
 
     def __init__(self):
         super().__init__()
@@ -17,5 +17,5 @@ class Demo(Plugin):
 
     def init_page(self, **kw):
         container = containers.Container()
-        container.append(tables.DataTable(self.df.data))
+        container.append(tables.Table(self.df.data))
         return container

@@ -9,7 +9,8 @@
         <ul>
             {% for plugin in plugin_group %}
             <li>
-                <a class="dropdown-item" href="/plugin/{{plugin}}">{{plugin}}</a>
+                <a class="dropdown-item"
+                    href="/plugin/{{plugin}}">{{plugin.title}}</a>
             </li>
             {% endfor %}
         </ul>

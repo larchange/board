@@ -9,14 +9,24 @@ class Container(Widget, MutableSequence):
         self._content = []
         self.orient = orient
 
-    def render_html(self):
-        return "<div id={}>{}<div>".format(
+    def render(self):
+        response = super().render()
+        html = []
+        js = []
+        for widget in self._content:
+            res = widget.render()
+            html.append(res.html)
+            js.append(res.js)
+            response.scripts |= res.scripts
+            response.styles |= res.styles
+
+        response.html = "<div id={}>{}<div>".format(
             self.uuid,
-            "".join(map(to_html, self._content))
+            "".join(html)
         )
 
-    def render_js(self):
-        return "".join(map(to_js, self._content))
+        response.js = "".join(js)
+        return response
 
     def __getitem__(self, idx):
         self._content[idx]

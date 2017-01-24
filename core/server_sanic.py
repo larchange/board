@@ -5,7 +5,6 @@ from . import widget
 from . import to_html
 from . import to_js
 import os
-from ..plugins import demo
 from collections import defaultdict
 from sanic import Sanic
 from sanic.response import text
@@ -50,16 +49,17 @@ async def handle_plugin(request, plugin_name):
         }
     )
     if plug.template:
+        response = response.render()
         return html(ENV.get_template(plug.template).render(
             plugin=plug,
-            plugin_content=to_html(response),
-            plugin_js=to_js(response),
-            scripts=widget.Widget.scripts,
-            styles=widget.Widget.styles,
+            plugin_content=response.html,
+            plugin_js=response.js,
+            scripts=response.scripts,
+            styles=response.styles,
             plugins=PLUGIN_BY_CAT
         ))
     else:
-        return html(to_html(response))
+        return html(response)
 
 def start_server():
     app.run(host="0.0.0.0", port=8000, debug=True)

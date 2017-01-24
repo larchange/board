@@ -4,7 +4,7 @@ from functools import singledispatch
 @singledispatch
 def to_html(obj):
     try:
-        return obj.render_html()
+        return obj.html
     except:
         return str(obj)
 
@@ -12,7 +12,7 @@ def to_html(obj):
 @singledispatch
 def to_js(obj):
     try:
-        return obj.render_js()
+        return obj.js
     except:
         return ""
 

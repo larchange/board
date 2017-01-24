@@ -4,6 +4,14 @@ from jinja2 import Environment, FileSystemLoader
 import functools
 
 
+class Response(object):
+    def __init__(self):
+        self.html = ""
+        self.js = ""
+        self.styles = set()
+        self.scripts = set()
+
+
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -13,21 +21,15 @@ class Widget:
     scripts = set()
     styles = set()
 
-    def __new__(cls, *args, **kw):
-        instance = super().__new__(cls)
-        Widget.scripts |= set(cls.scripts)
-        Widget.styles |= set(cls.styles)
-        return instance
-
     def __init__(self, *args, **kw):
         super().__init__()
         self.uuid = "id_{}".format(uuid.uuid1())
 
-    def render_html(self):
-        pass
-
-    def render_js(self):
-        return ""
+    def render(self):
+        response = Response()
+        response.scripts |= set(self.scripts)
+        response.styles |= set(self.styles)
+        return response
  
 
 class Jinja2Widget(Widget):
@@ -52,14 +54,19 @@ class Jinja2Widget(Widget):
         super().__init__(*args, **kw)
         self.data_cache = None
 
-    def render_html(self):
-        self.data_cache = self.data()
-        return self.template.render(**self.data_cache)
+    def render(self):
+        response = super().render()
+        data = self.data()
+        response.html += self.render_html(data)
+        response.js += self.render_js(data)
+        return response
 
-    def render_js(self):
+    def render_html(self, data):
+        return self.template.render(**data)
+
+    def render_js(self, data):
         if self.template_js is not None:
-            res = self.template_js.render(**self.data_cache)
-            self.data_cache = None
+            res = self.template_js.render(**data)
             return res
         else:
             return ""

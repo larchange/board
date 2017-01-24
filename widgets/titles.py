@@ -6,8 +6,10 @@ class Title(Widget):
         self.level = level
         self.title = title
 
-    def render_html(self):
-        return '<h{level}>{title}</h{level}>'.format(
+    def render(self):
+        response = super().render()
+        response.html += '<h{level}>{title}</h{level}>'.format(
             level=self.level,
             title=self.title
         )
+        return response

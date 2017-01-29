@@ -23,6 +23,18 @@ class DemoEmbeddedVideo(Plugin):
             "To go further: "
             "https://developers.google.com/youtube/iframe_api_reference"
         ))
+
+        container.append(typography.Title(
+            "Rempaillage cannage prés des yvelines versailles houdan",
+            level=2
+        ))
+        container.append(video.Dailymotion("xgshqb"))
+        container.append(typography.Paragraph(
+            "To go further: "
+            "http://dailymotion.canalblog.com/archives/2011/02/10/20351553.html"
+        ))
+
+
         container.append(typography.Title("The source", level=2))
         container.append(code.MySource())
         return container

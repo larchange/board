@@ -1,5 +1,4 @@
 from board.widgets import containers
-from board.widgets import titles
 from board.widgets import tables
 from board.core.plugin import Plugin
 
@@ -13,9 +12,9 @@ class DemoTable(Plugin):
 
     def __init__(self):
         super().__init__()
-        self.df = sm.datasets.get_rdataset("Duncan", "car")
 
     async def init_page(self, **kw):
+        self.df = sm.datasets.get_rdataset("Duncan", "car")
         container = containers.Container()
         container.append(tables.Table(self.df.data))
         return container

@@ -1,0 +1,10 @@
+<blockquote>
+    <p>{{quote}}</p>
+    {% if small %}
+    <small>{{small}}
+        {%if source %}
+        <cite title="Source Title">{{source}}</cite>
+        {%endif%}
+    </small>
+    {%endif%}
+</blockquote>

@@ -1,5 +1,13 @@
 
 
 Put board in PYTHONPATH
-and run python start_board.py
-a demo board is available
+
+run::
+
+    pip install -r requirements.txt
+
+then to start the board::
+
+    python start_board.py
+
+A demo board is available

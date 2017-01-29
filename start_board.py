@@ -29,14 +29,19 @@ python_files = glob.glob(
 )
 
 for filename in python_files:
-    exec(
-        compile(
-            open(filename, "rb").read(),
-            filename,
-            'exec'
-        ), globals(), locals()
-    )
+    try:
+        print(filename)
+        exec(
+            compile(
+                open(filename, "rb").read(),
+                filename,
+                'exec'
+            ), globals(), locals()
+        )
+    except:
+        import traceback
+        traceback.print_exc()
 
 
-from board.core import server_sanic
-server_sanic.start_server()
+from board.core import server
+server.start_server()

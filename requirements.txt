@@ -1,0 +1,4 @@
+sanic
+aiomcache
+jinja2
+websockets

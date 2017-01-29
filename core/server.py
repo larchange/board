@@ -1,4 +1,3 @@
-import cherrypy
 import pandas
 from jinja2 import Environment, FileSystemLoader
 from . import plugin
@@ -6,11 +5,28 @@ from . import widget
 from . import to_html
 from . import to_js
 import os
-from ..plugins import demo
 from collections import defaultdict
+from sanic import Sanic
+from sanic.response import text
+from sanic.response import html
+
+import asyncio
+import websockets
+import uvloop
+from . import producer
+
+import logging
+logger = logging.getLogger('websockets.server')
+logger.setLevel(logging.DEBUG)
+logger.addHandler(logging.StreamHandler())
+
+
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+
+app = Sanic(__name__)
 
 
 ENV = Environment(
@@ -25,47 +41,57 @@ for plug in plugins:
 PLUGIN_BY_CAT = dict(PLUGIN_BY_CAT)
 
 
-class Web(object):
-    @cherrypy.expose
-    def index(self):
-        scripts = widget.Widget.scripts
-        styles = widget.Widget.styles
 
-        return ENV.get_template("home.html").render(
-            plugins=PLUGIN_BY_CAT,
-            scripts=scripts
-        )
+@app.route("/")
+async def handle_index(request):
+    scripts = widget.Widget.scripts
+    styles = widget.Widget.styles
 
-    @cherrypy.expose
-    def plugin(self, plugin_name, **kw):
-        plug = plugin.Plugin.plugins[plugin_name]
-        response = plug.init_page(**kw)
-        if plug.template:
-            return ENV.get_template(plug.template).render(
-                plugin=plug,
-                plugin_content=to_html(response),
-                plugin_js=to_js(response),
-                scripts=widget.Widget.scripts,
-                styles=widget.Widget.styles,
-                plugins=PLUGIN_BY_CAT
-            )
-        else:
-            return to_html(response)
+    return html(ENV.get_template("home.html").render(
+        plugins=PLUGIN_BY_CAT,
+        scripts=scripts
+    ))
 
+
+@app.route("/plugin/<plugin_name>")
+async def handle_plugin(request, plugin_name):
+    plug = plugin.Plugin.plugins[plugin_name]
+    response = await plug.init_page(
+        **{
+            key: value[0]
+            for key, value in request.args.items()
+        }
+    )
+    if plug.template:
+        response = await response.render()
+        return html(ENV.get_template(plug.template).render(
+            plugin=plug,
+            plugin_content=response.html,
+            plugin_js=response.js,
+            scripts=response.scripts,
+            styles=response.styles,
+            plugins=PLUGIN_BY_CAT
+        ))
+    else:
+        return html(response)
+
+
+async def ws(websocket, path):
+    name = await websocket.recv()
+    try:
+        await producer.producer_registered.pop(name)(websocket)
+    except:
+        import traceback
+        traceback.print_exc()
+
+
+loop = asyncio.get_event_loop()
+ws_server = websockets.serve(
+    ws, '', 9000,
+    loop=loop
+)
+loop.run_until_complete(ws_server)
 
 
 def start_server():
-    conf = {
-        'global': {
-            'server.socket_host': '0.0.0.0',
-            'server.socket_port': 8000,
-        },
-        '/': {
-            'tools.sessions.on': True,
-        },
-        '/static': {
-            'tools.staticdir.on': True,
-            'tools.staticdir.dir': SCRIPT_DIR + '/../static'
-        }
-    }
-    cherrypy.quickstart(Web(), '/', conf)
+    app.run(host="0.0.0.0", port=8000, debug=True, loop=loop)

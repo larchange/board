@@ -26,6 +26,14 @@ class DemoTypography(Plugin):
                 ['Hello', 'Buenos dia', 'Salut']
             )
         )
+        container.append(typography.Title('Some labels', level=2))
+
+        container.append(typography.Label("Default", "default"))
+        container.append(typography.Label("Primary", "primary"))
+        container.append(typography.Label("Success", "success"))
+        container.append(typography.Label("Info", "info"))
+        container.append(typography.Label("Warning", "warning"))
+        container.append(typography.Label("Danger", "danger"))
         
         container.append(typography.Title("The source", level=2))
         container.append(code.MySource())

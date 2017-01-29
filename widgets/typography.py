@@ -60,3 +60,18 @@ class Paragraph(Widget):
             self.text
         )
         return response
+
+
+class Label(Widget):
+    def __init__(self, text, kind='default'):
+        self.text = text
+        self.kind = kind
+
+    async def render(self):
+        response = await super().render()
+        response.html += """
+            <span class="label label-{kind}">
+            {text}
+            </span>
+        """.format(**vars(self))
+        return response

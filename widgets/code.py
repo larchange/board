@@ -1,14 +1,14 @@
 import inspect, os
 from ..core.widget import Widget
-from board import resources
+from board import dependancies
 
 
 class Code(Widget):
     scripts = [
-        resources.scripts.highlight
+        dependancies.scripts.highlight
     ]
     styles = [
-        resources.styles.highlight
+        dependancies.styles.highlight
     ]
 
     def __init__(self, code, language="nohighlight"):

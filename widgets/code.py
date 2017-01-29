@@ -1,13 +1,14 @@
 import inspect, os
 from ..core.widget import Widget
+from board import resources
 
 
 class Code(Widget):
     scripts = [
-        "//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"
+        resources.scripts.highlight
     ]
     styles = [
-        "//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css"
+        resources.styles.highlight
     ]
 
     def __init__(self, code, language="nohighlight"):

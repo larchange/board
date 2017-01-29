@@ -1,12 +1,13 @@
 from ..core.widget import Jinja2Widget
 from board.core.plugin import Plugin
+from board import resources
 
 
 class Graph(Jinja2Widget, template="graph"):
     scripts = [
-        "http://dygraphs.com/2.0.0/dygraph.min.js",
+        resources.scripts.dygraph,
     ]
-    styles = ["http://dygraphs.com/2.0.0/dygraph.css"]
+    styles = [resources.styles.dygraph]
 
     def __init__(self, df, *args, **kw):
         super().__init__(*args, **kw)

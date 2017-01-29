@@ -2,6 +2,7 @@ from board.widgets import containers
 from board.widgets import video
 from board.widgets import typography
 from board.core.plugin import Plugin
+import inspect
 
 
 class DemoEmbeddedVideo(Plugin):
@@ -22,4 +23,6 @@ class DemoEmbeddedVideo(Plugin):
             "To go further: "
             "https://developers.google.com/youtube/iframe_api_reference"
         ))
+        container.append(typography.Title("The source", level=2))
+        container.append(code.MySource())
         return container

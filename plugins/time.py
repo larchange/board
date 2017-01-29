@@ -18,4 +18,6 @@ class DemoTimeWithWS(Plugin):
             " connected to a python async producer!"
         ))
         container.append(time.Time())
+        container.append(typography.Title("The source", level=2))
+        container.append(code.MySource())
         return container

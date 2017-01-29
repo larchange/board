@@ -17,4 +17,8 @@ class DemoTable(Plugin):
         self.df = sm.datasets.get_rdataset("Duncan", "car")
         container = containers.Container()
         container.append(tables.Table(self.df.data))
+
+        container.append(typography.Title("The source", level=2))
+        container.append(code.MySource())
+
         return container

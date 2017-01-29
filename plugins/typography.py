@@ -27,5 +27,7 @@ class DemoTypography(Plugin):
             )
         )
         
+        container.append(typography.Title("The source", level=2))
+        container.append(code.MySource())
 
         return container

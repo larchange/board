@@ -20,7 +20,7 @@ class Container(Widget, MutableSequence):
             response.scripts |= res.scripts
             response.styles |= res.styles
 
-        response.html = "<div id={}>{}<div>".format(
+        response.html = "<div id={}>{}</div>".format(
             self.uuid,
             "".join(html)
         )

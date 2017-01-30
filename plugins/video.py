@@ -7,7 +7,7 @@ import inspect
 
 class DemoEmbeddedVideo(Plugin):
     title = "Embedded video"
-    category = "Video"
+    category = "Extra"
 
     def __init__(self):
         super().__init__()

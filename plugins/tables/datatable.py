@@ -8,7 +8,7 @@ import statsmodels.api as sm
 
 class DemoDataTable(Plugin):
     title = "DataTable"
-    category = "Demo tables"
+    category = "Typo & contents"
 
     def __init__(self):
         super().__init__()

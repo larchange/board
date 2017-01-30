@@ -8,7 +8,7 @@ import pandas
 
 class DemoGraph(Plugin):
     title = "Graph"
-    category = "Graph"
+    category = "Extra"
 
     def __init__(self):
         super().__init__()

@@ -5,7 +5,7 @@ from board.core.plugin import Plugin
 
 class DemoTypography(Plugin):
     title = "Typography"
-    category = "Demo typography and contents"
+    category = "Typo & contents"
 
     def __init__(self):
         super().__init__()

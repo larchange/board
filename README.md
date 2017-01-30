@@ -13,7 +13,7 @@ clone, install the requirements and then start the board!
 git clone https://github.com/larchange/board.git
 cd board
 pip install -r requirements.txt
-PYTHONPATH=.$PYTHONPATH python start_board
+PYTHONPATH=..:$PYTHONPATH python start_board.py
 ```
 
 Open a browser and check the demo at http://localhost:8000

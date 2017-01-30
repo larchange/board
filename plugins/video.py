@@ -13,17 +13,23 @@ class DemoEmbeddedVideo(Plugin):
         super().__init__()
 
     async def init_page(self, **kw):
+        full_container = containers.Container()
+        hstack = containers.Container(orient="horizontal", max_per_row=2)
         container = containers.Container()
         container.append(typography.Title(
             "Thinking about Concurrency, Raymond Hettinger",
             level=2
         ))
         container.append(video.Youtube("Bv25Dwe84g0"))
+
         container.append(typography.Paragraph(
             "To go further: "
             "https://developers.google.com/youtube/iframe_api_reference"
         ))
 
+        hstack << container
+
+        container = containers.Container()
         container.append(typography.Title(
             "Rempaillage cannage prés des yvelines versailles houdan",
             level=2
@@ -34,7 +40,9 @@ class DemoEmbeddedVideo(Plugin):
             "http://dailymotion.canalblog.com/archives/2011/02/10/20351553.html"
         ))
 
+        hstack << container
+        full_container << hstack
+        full_container << typography.Title("The source", level=2)
+        full_container << code.MySource()
 
-        container.append(typography.Title("The source", level=2))
-        container.append(code.MySource())
-        return container
+        return full_container

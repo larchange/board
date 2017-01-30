@@ -4,24 +4,38 @@ from collections.abc import MutableSequence
 
 
 class Container(Widget, MutableSequence):
-    def __init__(self, orient="vertical", *args, **kw):
+    def __init__(self, orient="vertical", max_per_row=6, *args, **kw):
         super().__init__(self, *args, **kw)
         self._content = []
         self.orient = orient
+        assert max_per_row in (1, 2, 3, 4, 6, 12)
+        self.max_per_row = max_per_row 
 
     async def render(self):
         response = await super().render()
         html = []
         js = []
-        for widget in self._content:
+        for number, widget in enumerate(self._content):
             res = await widget.render()
-            html.append(res.html)
+            if self.orient == "horizontal":
+                html.append(
+                    '<div class="col-md-{}">{}</div>'.format(
+                        int(12 / self.max_per_row), 
+                        res.html
+                    )
+                )
+            else:
+                html.append(
+                    '<div>{}</div>'.format(res.html)
+                )
+
             js.append(res.js)
             response.scripts |= res.scripts
             response.styles |= res.styles
 
-        response.html = "<div id={}>{}</div>".format(
+        response.html = '<div id={} class="{}">{}</div>'.format(
             self.uuid,
+            "row",
             "".join(html)
         )
 
@@ -42,3 +56,8 @@ class Container(Widget, MutableSequence):
 
     def insert(self, idx, obj):
         self._content.insert(idx, obj)
+
+    def __lshift__(self, obj):
+        self.append(obj)
+    
+

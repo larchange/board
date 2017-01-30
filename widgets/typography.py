@@ -51,12 +51,20 @@ class Title(Widget):
 
 
 class Paragraph(Widget):
-    def __init__(self, text):
+    def __init__(self, text, lead=False, alignment=None):
         self.text = text
+        self.lead = lead
+        self.alignment = alignment
 
     async def render(self):
         response = await super().render()
-        response.html += '<p>{}</p>'.format(
+        klass = ""
+        if self.lead:
+            klass = "lead"
+        if self.alignment:
+            klass += " text-" + self.alignment
+        response.html += '<p class="{}">{}</p>'.format(
+            klass,
             self.text
         )
         return response
@@ -75,3 +83,17 @@ class Label(Widget):
             </span>
         """.format(**vars(self))
         return response
+
+
+class Keyboard(Widget):
+    def __init__(self, text):
+        self.text = text
+
+    async def render(self):
+        response = await super().render()
+        response.html += """
+            <kbd>{text}</kbd>
+        """.format(text=self.text)
+        return response
+
+

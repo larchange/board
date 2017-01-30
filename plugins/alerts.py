@@ -12,17 +12,13 @@ class DemoAlert(Plugin):
 
     async def init_page(self, **kw):
         container = containers.Container()
-        container.append(
-            alerts.Alert(
-                "This alert needs your attention, but it's not super important."
-            )
+        container << alerts.Alert(
+            "This alert needs your attention, but it's not super important."
         )
-        container.append(
-            alerts.Alert(
-                "Better check yourself, you're not looking too good.",
-                kind="warning",
-                dismissible=True
-            )
+        container << alerts.Alert(
+            "Better check yourself, you're not looking too good.",
+            kind="warning",
+            dismissible=True
         )
 
         container.append(typography.Title("The source", level=2))

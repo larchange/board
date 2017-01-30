@@ -12,30 +12,31 @@ class DemoTypography(Plugin):
 
     async def init_page(self, **kw):
         container = containers.Container()
-        container.append(typography.Title('Level 1 Title', level=1))
-        container.append(typography.Title('Level 2 Title', level=2))
-        container.append(
-            typography.Blockquote(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'Someone famous',
-                'Source Title'
-            )
-        )
-        container.append(typography.Title('Level 2 Title', level=2))
-        container.append(typography.List(
-                ['Hello', 'Buenos dia', 'Salut']
-            )
-        )
-        container.append(typography.Title('Some labels', level=2))
+        container << typography.Title('Level 1 Title', level=1)
+        container << typography.Title('Level 2 Title', level=2)
 
-        container.append(typography.Label("Default", "default"))
-        container.append(typography.Label("Primary", "primary"))
-        container.append(typography.Label("Success", "success"))
-        container.append(typography.Label("Info", "info"))
-        container.append(typography.Label("Warning", "warning"))
-        container.append(typography.Label("Danger", "danger"))
+        hstack = containers.Container(orient="horizontal", max_per_row=2)
+        hstack << typography.Blockquote(
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            'Someone famous',
+            'Source Title'
+        )
+        hstack << typography.List(
+            ['Hello', 'Buenos dia', 'Salut']
+        )
+        container << hstack
+        container << (typography.Title('Some labels', level=2))
+
+        hstack = containers.Container(orient="horizontal", max_per_row=2)
+        hstack << typography.Label("Default", "default")
+        hstack << typography.Label("Primary", "primary")
+        hstack << typography.Label("Success", "success")
+        hstack << typography.Label("Info", "info")
+        hstack << typography.Label("Warning", "warning")
+        hstack << typography.Label("Danger", "danger")
+        container << hstack
         
-        container.append(typography.Title("The source", level=2))
-        container.append(code.MySource())
+        container << typography.Title("The source", level=2)
+        container << code.MySource()
 
         return container

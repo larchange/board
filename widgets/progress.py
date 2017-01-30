@@ -12,7 +12,14 @@ class ProgressBar(Jinja2Widget, template="progression"):
         self.init_value = init_value
 
     async def data(self):
-        producer.producer_registered[self.uuid] = self.progression
+        async def send(websocket):
+            try:
+                async for percentage in self.progression():
+                    await websocket.send(str(percentage))
+            except:
+                pass
+
+        producer.producer_registered[self.uuid] = send
 
         return {
             'uuid': self.uuid,

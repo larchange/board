@@ -26,12 +26,10 @@ class DemoProgressBar(Plugin):
         return container
 
 
-async def progress_producer(websocket):
+async def progress_producer():
     percentage = 0
-    try:
-        while percentage <= 100:
-            await websocket.send(str(percentage))
-            percentage += 1
-            await asyncio.sleep(random.random())
-    except:
-        pass
+    while percentage <= 100:
+        yield percentage
+        percentage += random.choice([-1, 0, 1, 2])
+        percentage = max(0, percentage)
+        await asyncio.sleep(random.random())

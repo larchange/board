@@ -2,3 +2,6 @@ sanic
 aiomcache
 jinja2
 websockets
+statsmodels
+pandas
+numpy

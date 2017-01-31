@@ -59,5 +59,6 @@ class Container(Widget, MutableSequence):
 
     def __lshift__(self, obj):
         self.append(obj)
+        return self
     
 

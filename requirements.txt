@@ -1,4 +1,7 @@
-sanic
-aiomcache
-jinja2
-websockets
+Sanic==0.2.0
+aiomcache==0.4.0
+Jinja2==2.10
+websockets==3.2
+scipy==1.0.1
+uvloop==0.7.2
+pandas==0.22.0

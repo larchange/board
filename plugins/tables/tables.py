@@ -3,7 +3,6 @@ from board.widgets import tables
 from board.core.plugin import Plugin
 
 import pandas
-import statsmodels.api as sm
 
 
 class DemoTable(Plugin):
@@ -14,9 +13,12 @@ class DemoTable(Plugin):
         super().__init__()
 
     async def init_page(self, **kw):
-        self.df = sm.datasets.get_rdataset("Duncan", "car")
+        self.df = pandas.DataFrame({
+            "a": [1, 2, 3, 4],
+            "b": [2, 3, 4, 5]
+        })
         container = containers.Container()
-        container.append(tables.Table(self.df.data))
+        container.append(tables.Table(self.df))
 
         container.append(typography.Title("The source", level=2))
         container.append(code.MySource())

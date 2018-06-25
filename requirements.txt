@@ -5,3 +5,4 @@ websockets==3.2
 scipy==1.0.1
 uvloop==0.7.2
 pandas==0.22.0
+numpy
